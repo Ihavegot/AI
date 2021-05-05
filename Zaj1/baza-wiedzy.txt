@@ -1,0 +1,7 @@
+1. A -> F
+2. F,H -> G 
+3. B -> H
+4. G,X -> Z
+5. B,D -> Q
+fakty
+A,B,C,D

@@ -1,0 +1,11 @@
+Nodes:
+A,B,C
+Conditional Dependencies:
+(A,C),(B,C)
+Probabilities:
+P(A)=0.5
+P(B)=0.4
+P(C|A,B)=0.4
+P(C|~A,B)=0.5
+P(C|A,~B)=0.2
+P(C|~A,~B)=0.1
