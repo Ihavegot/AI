@@ -83,5 +83,3 @@ x = [[2.5, 3.2, 1.0, 2.3]]
 x = skaler.transform(x)
 pred = model.predict_classes(x)
 print('przyklad: ' + str(pred))
-
-#przerobic aby przewidywal eventy
