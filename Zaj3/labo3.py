@@ -1,28 +1,30 @@
 import itertools
 
-f = open("C:\\Python\\AI\\Zaj3\\dung.txt")
+f = open("C:\\Python\\AI\\AI\\Zaj3\\dung.txt")
 read = f.readlines()
 f.close()
+
 
 class Actions:
     def __init__(self):
         self.attack = []
-        self.state = None # IN = True, OUT = False, DEF = None
+        self.state = None  # IN = True, OUT = False, DEF = None
 
-delSpecChar = read[3].replace(")"," ")
-delSpecChar = delSpecChar.replace("(","").rstrip(" ")
+
+delSpecChar = read[3].replace(")", " ")
+delSpecChar = delSpecChar.replace("(", "").rstrip(" ")
 delSpecChar = delSpecChar.split(" ,")
 
 actions = {
-    i:Actions() for i in read[1].rstrip("\n").split(",")
+    i: Actions() for i in read[1].rstrip("\n").split(",")
 }
 
 for i in actions:
     for j in delSpecChar:
-        if j[2]==i:
+        if j[2] == i:
             actions[i].attack.append(j[0])
 
-#Grounded
+# Grounded
 visited = []
 hasChanged = True
 while hasChanged:
@@ -30,7 +32,7 @@ while hasChanged:
     for defedner in actions:
         if defedner in visited:
             continue
-        if not actions[defedner].attack and actions[defedner].state == None:
+        if not actions[defedner].attack and actions[defedner].state is None:
             visited.append(defedner)
             actions[defedner].state = True
             hasChanged = True
@@ -39,12 +41,12 @@ while hasChanged:
             outCount = 0
             for attacker in actions:
                 if attacker in actions[defedner].attack:
-                    if actions[attacker].state == True:
+                    if actions[attacker].state:
                         visited.append(defedner)
                         actions[defedner].state = False
                         hasChanged = True
                         break
-                    elif actions[attacker].state == False:
+                    elif not actions[attacker].state:
                         outCount += 1
 
             if outCount == len(actions[defedner].attack):
@@ -54,25 +56,26 @@ while hasChanged:
 
 grounded = []
 defensible = []
-#Test
+# Test
 for i in actions:
-    if actions[i].state == True:
-        #print(f"{i} | IN")
+    if actions[i].state:
+        # print(f"{i} | IN")
         grounded.append(i)
-    elif actions[i].state == False:
-        #print(f"{i} | OUT")
+    elif not actions[i].state:
+        # print(f"{i} | OUT")
         pass
     else:
-        #print(f"{i} | DEF")
+        # print(f"{i} | DEF")
         defensible.append(i)
 
 print("> GROUNDED <")
 print(grounded)
 
-#Prefered
+# Prefered
 options = [
     list(i) for i in itertools.product([True, False], repeat=len(defensible))
 ]
+
 
 def chechDefensible(o):
     for k in actions[o].attack:
@@ -81,6 +84,7 @@ def chechDefensible(o):
         if actions[o].state and actions[k].state:
             return False
     return actions[o].state
+
 
 print("> PREFERED <")
 for i in options:

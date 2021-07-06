@@ -13,8 +13,9 @@ for line in read:
     if isProb:
         line = line.replace("\n", "").replace("P(", "").replace(")", "").split("=")
         prob.update({
-            line[0].replace(" ", ""):float(line[1])
+            line[0].replace(" ", ""): float(line[1])
         })
+
 
 def solve_bayes(query):
     query = query.replace("P(", "").replace(")", "")
@@ -25,7 +26,7 @@ def solve_bayes(query):
             if query.replace("~", "") in prob:
                 return 1 - prob[query.replace("~", "")]
             else:
-                return 1-solve_bayes(query.replace("~", ""))
+                return 1 - solve_bayes(query.replace("~", ""))
 
         out = 0
         if "|" not in query:
@@ -50,14 +51,15 @@ def solve_bayes(query):
                     prob[i] = 1
                 else:
                     prob.update({
-                        i:1
+                        i: 1
                     })
             return solve_bayes(tempQuery)
 
         if query.startswith("~"):
-            return 1-out
+            return 1 - out
         else:
             return out
+
 
 print("Wprowadz szukane prawdopodobienstwo np. P(MA|G), P(~G), P(GR|G,D)\nProsze uzywac duzych liter!")
 exampleInput = "P(MA|D)"
